@@ -1,0 +1,18 @@
+{
+  "in_scope_domains": [
+    "localhost",
+    "127.0.0.1"
+  ],
+  "in_scope_cidrs": [
+    "127.0.0.0/8"
+  ],
+  "out_of_scope_domains": [],
+  "out_of_scope_cidrs": [],
+  "allowed_ports": [80, 443, 8000, 8080, 8443],
+  "forbidden_paths": [],
+  "requires_auth": false,
+  "auth_config": null,
+  "max_requests_per_second": 5,
+  "max_concurrent_requests": 2,
+  "legal_acknowledged": true
+}

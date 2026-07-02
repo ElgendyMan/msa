@@ -1,0 +1,22 @@
+{
+  "in_scope_domains": [
+    "example.com",
+    "api.example.com"
+  ],
+  "in_scope_cidrs": [],
+  "out_of_scope_domains": [
+    "admin.example.com"
+  ],
+  "out_of_scope_cidrs": [],
+  "allowed_ports": [80, 443, 8080, 8443],
+  "forbidden_paths": [
+    "/admin",
+    "/logout",
+    "/api/v1/internal"
+  ],
+  "requires_auth": false,
+  "auth_config": null,
+  "max_requests_per_second": 10,
+  "max_concurrent_requests": 5,
+  "legal_acknowledged": true
+}

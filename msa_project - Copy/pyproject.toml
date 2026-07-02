@@ -1,0 +1,92 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zero-budget-pentest"
+version = "0.1.0"
+description = "Zero-Budget, Autonomous Web Pentesting Framework built on LangGraph"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [{ name = "Security Architecture Team" }]
+keywords = ["security", "pentesting", "langgraph", "automation", "web"]
+
+dependencies = [
+    "python-dotenv>=1.0.1",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "langchain>=0.3.0",
+    "langchain-core>=0.3.0",
+    "langchain-google-genai>=2.0.0",
+    "langchain-openai>=0.2.0",
+    "langgraph>=0.2.50",
+    "httpx[http2]>=0.27.0",
+    "playwright>=1.45.0",
+    "qdrant-client>=1.11.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "jinja2>=3.1.4",
+    "python-multipart>=0.0.9",
+    "tenacity>=8.5.0",
+    "structlog>=24.1.0",
+    "sse-starlette>=2.1.0",
+]
+
+[project.optional-dependencies]
+embeddings = [
+    # BGE-M3 local embedder — heavy install, kept optional so unit tests
+    # do not have to pull in torch/sentence-transformers.
+    "sentence-transformers>=3.0.0",
+    "FlagEmbedding>=1.2.10",
+]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.6.0",
+    "mypy>=1.11.0",
+    "respx>=0.21.1",
+]
+
+[project.scripts]
+pentest = "src.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "W",   # pycodestyle / pyflakes
+    "I",             # isort
+    "B",             # bugbear
+    "UP",            # pyupgrade
+    "SIM",           # simplify
+    "C4",            # comprehensions
+    "PL",            # pylint subset
+    "RUF",           # ruff-specific
+]
+ignore = ["E501"]    # line length handled by formatter
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+plugins = ["pydantic.mypy"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[[tool.mypy.overrides]]
+module = ["qdrant_client.*", "sentence_transformers.*", "FlagEmbedding.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers --cov=src --cov-report=term-missing"
